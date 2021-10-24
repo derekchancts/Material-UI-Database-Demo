@@ -5,10 +5,32 @@ import {
   Tab,
   // Box
 } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
+
+
+const useStyles = makeStyles(theme => ({
+  Paper: {
+    overflowX: "auto",
+
+    // '&.MuiTabs-flexContainer': {
+      [theme.breakpoints.down('sm')]: {
+        // backgroundColor: 'red',
+        // minWidth:"50%",
+        // maxWidth:"70%"
+
+      }, 
+
+    // }
+
+
+    
+  }
+}))
 
 
 
 const Footer = ({ muscles, selectedCategory, setSelectedCategory }) => {
+  const classes = useStyles();
 
   const index = selectedCategory 
     ? muscles.findIndex(group => group === selectedCategory) + 1
@@ -22,7 +44,7 @@ const Footer = ({ muscles, selectedCategory, setSelectedCategory }) => {
 
   return (
     // <Box sx={{ width: '100%' }}>
-    <Paper sx={{ }}>
+    <Paper >
       <Tabs
         // value={"one"}
         // value={0}
@@ -32,6 +54,7 @@ const Footer = ({ muscles, selectedCategory, setSelectedCategory }) => {
         indicatorColor="secondary"
         aria-label="secondary tabs example"
         centered
+        // variant="scrollable"
       >
         {/* <Tab value="one" label="Item One" />
         <Tab value="two" label="Item Two" />
@@ -41,9 +64,9 @@ const Footer = ({ muscles, selectedCategory, setSelectedCategory }) => {
         <Tab label="Item Two" />
         <Tab label="Item Three" /> */}
 
-        <Tab label="All" />
+        <Tab label="All" className={classes.Paper}/>
         {muscles.map(muscle => (
-          <Tab key={muscle} label={muscle} />
+          <Tab key={muscle} label={muscle} className={classes.Paper} />
         ))}
 
       </Tabs>

@@ -4,32 +4,35 @@ import {
   DialogTitle, 
   DialogContent,
   DialogContentText,
+  Fab,
   DialogActions,
   TextField,
   Button,
-  Fab,
   FormControl,
   InputLabel,
   Select,
   MenuItem
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import makeStyles from '@mui/styles/makeStyles';
+// import Form from '../Form';
+// import makeStyles from '@mui/styles/makeStyles';
 
 
 
-const useStyles = makeStyles(theme => ({
-  FormControl: {
-    width: '500px'
-  }
-}))
+// const useStyles = makeStyles(theme => ({
+//   FormControl: {
+//     width: '500px'
+//   }
+// })) 
+
 
 
 
 const Props = ({ muscles: categories, onExerciseCreate }) => {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [isOpen, setIsOpen] = useState(false)
+  
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [muscles, setMuscles] = useState('');
@@ -58,6 +61,13 @@ const Props = ({ muscles: categories, onExerciseCreate }) => {
   };
 
 
+  const handleCancel = () => {
+    setIsOpen(false);
+    emptyValues();
+  }
+
+
+
   return (
     <>
       {/* <Fab color="primary" aria-label="add"> */}
@@ -74,6 +84,8 @@ const Props = ({ muscles: categories, onExerciseCreate }) => {
           <DialogContentText gutterBottom>
             Please fill out the form below
           </DialogContentText>
+
+            
           <form>
             <TextField
               variant="outlined"
@@ -88,13 +100,13 @@ const Props = ({ muscles: categories, onExerciseCreate }) => {
             />
 
             <FormControl fullWidth sx={{ mb: '.5rem' }}>
-            {/* <FormControl className={classes.FormControl}  sx={{ mb: '.5rem' }}> */}
+             {/* <FormControl className={classes.FormControl}  sx={{ mb: '.5rem' }}> */}
               <InputLabel id="muscle">Muscles</InputLabel>
               <Select
                 labelId="muscle"
                 id="muscles"
                 value={muscles}
-                label="Mucles"
+                // label="Muscles"
                 onChange={(e) => setMuscles(e.target.value)}
               >
                 {categories.map(category => 
@@ -116,10 +128,20 @@ const Props = ({ muscles: categories, onExerciseCreate }) => {
               rows={4}
             />
           </form>
+          
+
+          {/* <Form
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+          >
+          </Form> */}
+
+
         </DialogContent>
 
         <DialogActions sx={{ justifyContent: "center", mb: ".5rem"}}>
           <Button onClick={handleCreate} variant="contained">Create</Button>
+          <Button onClick={handleCancel} variant="contained" color="secondary">Cancel</Button>
         </DialogActions>
 
       </Dialog>

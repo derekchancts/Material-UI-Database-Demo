@@ -12,6 +12,7 @@ function App() {
   const [exercise, setExercise] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedExercise, setSelectedExercise] = useState('');
+  const [editMode, setEditMode] = useState(false);
 
 
 
@@ -55,18 +56,54 @@ function App() {
   useEffect(() => {
     async function getData() {
 
+      const initExercises = muscles.reduce((exercises, category) => ({
+        ...exercises,
+        [category]: []  // create empty array for each category
+      }), {})
+
+      // console.log(muscles, initExercises);
+
+
+      // https://stackoverflow.com/questions/24074968/does-sort-function-change-original-array
+
+      function compare( a, b ) {
+        if ( a.title < b.title ){
+          return -1;
+        }
+        if ( a.title > b.title ){
+          return 1;
+        }
+        return 0;
+      }
+
+      // SORTS THE NEW ARRAY, BUT NOT ALTERING THE ORIGINAL ARRAY
+      let sortedExerciseList = exerciseList.slice().sort(compare);
+      // let sortedExerciseList = exerciseList;
+      // sortedExerciseList = sortedExerciseList.slice().sort(compare);
+      console.log(exerciseList)
+      console.log(sortedExerciseList)
+
+
       const getExecisesByMuscles = () => {
-        return Object.entries( exerciseList.reduce((exercises, exercise) => {
+        // return Object.entries( exerciseList.reduce((exercises, exercise) => {
+        return Object.entries( sortedExerciseList.reduce((exercises, exercise) => {
           const { muscles } = exercise;
+
+          /*
           exercises[muscles] = 
           exercises[muscles]  // if exercises[muscles] exist or not empty / not undefined
           ? [...exercises[muscles], exercise]   // if array already exist, add the "exercise" object to the array 
                                                 // (to the new array after spreading the values of the existing array)
           : [exercise]    // otherwise, create a new array with the exercise object alone
+          */
+         
+        // after we use "initExercises", there's no need to check if the muscle category already exist
+        exercises[muscles] = [...exercises[muscles], exercise]  
 
         return exercises  // returns an object 
 
-          }, {})
+          // }, {})
+          }, initExercises)
           )
       };
 
@@ -77,6 +114,8 @@ function App() {
     getData()
   }, 
 [exerciseList])
+
+
   
 
 /*
@@ -111,7 +150,7 @@ function App() {
   };
 
 
-  const onExerciseCreate = newExercise => {
+  const handleExerciseCreate = newExercise => {
     // console.log(newExercise)
     setExerciseList([
       ...exerciseList,
@@ -121,9 +160,44 @@ function App() {
   };
 
 
+  const handleExerciseDelete = async (id) => {
+    // console.log(id)
+    
+    const newList = exerciseList.filter(exercise => exercise.id !== id)
+    // console.log(newList)
+    await setExerciseList(newList)
+
+    await setEditMode(false);
+    await setSelectedExercise({});
+    // console.log('Selected Exercise: ', selectedExercise )
+  };
+
+
+  const handleExerciseSelectEdit = id => {
+    setEditMode(true);
+
+    const foundExercise = exerciseList.find(exercise => exercise.id === id);
+    setSelectedExercise(foundExercise);
+  };
+
+
+  const handleExerciseEdit = (editExercise) => {
+    // console.log(editExercise)
+    // const filteredExercises = exerciseList.filter(exercise => exercise.id !== editExercise.id);
+
+    setSelectedExercise(editExercise);   // update this so useEffect can sync the props correctly with the state
+
+    setExerciseList([
+      // ...filteredExercises,
+      ...exerciseList.filter(exercise => exercise.id !== editExercise.id),
+      editExercise
+    ])
+
+  };
+ 
+
   
   // exercise = getExecisesByMuscle()
-
 
   return (
     <>
@@ -131,15 +205,25 @@ function App() {
       
       <Header 
         muscles={muscles}
-        onExerciseCreate={onExerciseCreate}
+        onExerciseCreate={handleExerciseCreate}
       />
 
       <Exercises 
         exercise={exercise} 
-        // setExerciseList={setExerciseList}
         selectedCategory={selectedCategory} 
         onSelect={handleExerciseSelected}
         selectedExercise={selectedExercise}
+        setSelectedExercise={setSelectedExercise}
+        onDelete={handleExerciseDelete}
+        onSelectEdit={handleExerciseSelectEdit}
+        exerciseList={exerciseList}
+
+        editMode={editMode}
+        setEditMode={setEditMode}
+        muscles={muscles}
+        onEditExercise={handleExerciseEdit}
+        selectedExercises={selectedExercise}
+        
       />
 
       <Footer 
