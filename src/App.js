@@ -4,6 +4,9 @@ import Footer from "./components/layouts/Footer";
 import Header from "./components/layouts/Header";
 import Exercises from './components/exercises';
 import { muscles, exercises } from './data/store';
+import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { red, amber } from '@mui/material/colors';
 
 
 
@@ -13,6 +16,31 @@ function App() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedExercise, setSelectedExercise] = useState('');
   const [editMode, setEditMode] = useState(false);
+  const [toggleDark, settoggleDark] = useState(false);
+
+
+  const theme = createTheme({
+    palette: {
+      primary: red,
+      secondary: {
+        // main: amber[500],
+        // main: "#ffc107",   // hex code for amber[500],
+        main: amber.A400, 
+  
+        // if we define only the "main" color, then MUI will recalculate / pick the colors for "light" and "dark"
+        // light: 
+        // dark: 
+        light: amber[200],
+        dark: amber[700]
+      },
+      // mode: 'light'
+      mode: toggleDark ? 'dark' : 'light',
+    }
+  });
+  
+  // console.log(theme);
+  // console.log(red);
+  // console.log(theme.palette.primary);
 
 
 
@@ -80,8 +108,8 @@ function App() {
       let sortedExerciseList = exerciseList.slice().sort(compare);
       // let sortedExerciseList = exerciseList;
       // sortedExerciseList = sortedExerciseList.slice().sort(compare);
-      console.log(exerciseList)
-      console.log(sortedExerciseList)
+      // console.log(exerciseList)
+      // console.log(sortedExerciseList)
 
 
       const getExecisesByMuscles = () => {
@@ -160,16 +188,19 @@ function App() {
   };
 
 
+
   const handleExerciseDelete = async (id) => {
     // console.log(id)
     
-    const newList = exerciseList.filter(exercise => exercise.id !== id)
+    const newList = exerciseList.filter(exercise1 => exercise1.id !== id)
     // console.log(newList)
     await setExerciseList(newList)
-
     await setEditMode(false);
-    await setSelectedExercise({});
-    // console.log('Selected Exercise: ', selectedExercise )
+
+    // await setSelectedExercise({});
+    let temp = selectedExercise.id === id ? {} : selectedExercise;
+    await setSelectedExercise(temp)
+    // await console.log(selectedExercise)
   };
 
 
@@ -192,7 +223,6 @@ function App() {
       ...exerciseList.filter(exercise => exercise.id !== editExercise.id),
       editExercise
     ])
-
   };
  
 
@@ -201,36 +231,41 @@ function App() {
 
   return (
     <>
+     <CssBaseline />
+     
       {/* {console.log(getExecisesByMuscle())} */}
-      
-      <Header 
-        muscles={muscles}
-        onExerciseCreate={handleExerciseCreate}
-      />
+      <ThemeProvider theme={theme}>
+        <Header 
+          muscles={muscles}
+          onExerciseCreate={handleExerciseCreate}
+          toggleDark={toggleDark}
+          settoggleDark={settoggleDark}
+        />
 
-      <Exercises 
-        exercise={exercise} 
-        selectedCategory={selectedCategory} 
-        onSelect={handleExerciseSelected}
-        selectedExercise={selectedExercise}
-        setSelectedExercise={setSelectedExercise}
-        onDelete={handleExerciseDelete}
-        onSelectEdit={handleExerciseSelectEdit}
-        exerciseList={exerciseList}
+        <Exercises 
+          exercise={exercise} 
+          selectedCategory={selectedCategory} 
+          onSelect={handleExerciseSelected}
+          selectedExercise={selectedExercise}
+          setSelectedExercise={setSelectedExercise}
+          onDelete={handleExerciseDelete}
+          onSelectEdit={handleExerciseSelectEdit}
+          exerciseList={exerciseList}
 
-        editMode={editMode}
-        setEditMode={setEditMode}
-        muscles={muscles}
-        onEditExercise={handleExerciseEdit}
-        selectedExercises={selectedExercise}
-        
-      />
+          editMode={editMode}
+          setEditMode={setEditMode}
+          muscles={muscles}
+          onEditExercise={handleExerciseEdit}
+          selectedExercises={selectedExercise}
+          
+        />
 
-      <Footer 
-        muscles={muscles} 
-        selectedCategory={selectedCategory} 
-        setSelectedCategory={setSelectedCategory} 
-      />
+        <Footer 
+          muscles={muscles} 
+          selectedCategory={selectedCategory} 
+          setSelectedCategory={setSelectedCategory} 
+        />
+      </ThemeProvider>
 
     </>
   );

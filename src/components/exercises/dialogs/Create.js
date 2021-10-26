@@ -18,21 +18,25 @@ import AddIcon from '@mui/icons-material/Add';
 // import makeStyles from '@mui/styles/makeStyles';
 
 
-
 // const useStyles = makeStyles(theme => ({
-//   FormControl: {
-//     width: '500px'
+//   // FormControl: {
+//   //   width: '500px'
+//   // }
+//   btn:{
+//     color: "white",
+//     backgroundColor: "coral",
+
+//     '&:hover': {
+//       backgroundColor: '#e8784e'
+//     }
 //   }
 // })) 
-
-
 
 
 const Props = ({ muscles: categories, onExerciseCreate }) => {
   // const classes = useStyles();
 
   const [isOpen, setIsOpen] = useState(false)
-  
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [muscles, setMuscles] = useState('');
@@ -67,15 +71,33 @@ const Props = ({ muscles: categories, onExerciseCreate }) => {
   }
 
 
-
   return (
     <>
       {/* <Fab color="primary" aria-label="add"> */}
-      <Fab aria-label="add" size="small" onClick={() => setIsOpen(!isOpen)}>
+      <Fab 
+        aria-label="add" 
+        size="small" 
+        onClick={() => setIsOpen(!isOpen)}
+        // color="secondary"
+        // className={classes.btn}
+        sx={{
+          color: "white",
+          backgroundColor: "coral",
+      
+          '&:hover': {
+            backgroundColor: '#e8784e'
+          }
+        }}
+      >
         <AddIcon />
       </Fab>
 
-      <Dialog open={isOpen} onClose={() => setIsOpen(!isOpen)} fullWidth >  
+      <Dialog 
+        open={isOpen} 
+        onClose={() => setIsOpen(!isOpen)} 
+        fullWidth
+        maxWidth="sm"
+      >  
         <DialogTitle>
           Create a new exercise
         </DialogTitle>
@@ -140,7 +162,11 @@ const Props = ({ muscles: categories, onExerciseCreate }) => {
         </DialogContent>
 
         <DialogActions sx={{ justifyContent: "center", mb: ".5rem"}}>
-          <Button onClick={handleCreate} variant="contained">Create</Button>
+          <Button 
+            onClick={handleCreate} 
+            variant="contained" 
+            disabled={!title || !muscles || !description}
+          >Create</Button>
           <Button onClick={handleCancel} variant="contained" color="secondary">Cancel</Button>
         </DialogActions>
 

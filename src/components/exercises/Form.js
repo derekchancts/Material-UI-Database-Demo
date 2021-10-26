@@ -105,7 +105,11 @@ const Form = ({
       <br />
 
       <DialogActions sx={{ justifyContent: "center", mb: ".5rem"}}>
-        <Button onClick={handleSubmit} variant="contained">Edit</Button>
+        <Button 
+          onClick={handleSubmit} 
+          variant="contained"
+          disabled={!title || !muscles || !description}
+        >Edit</Button>
         <Button onClick={handleCancel} variant="contained" color="secondary">Cancel</Button>
       </DialogActions>
 

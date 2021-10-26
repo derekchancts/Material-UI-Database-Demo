@@ -6,10 +6,11 @@ import {
 } from '@mui/material';
 // import MenuIcon from '@mui/icons-material/Menu';
 import CreateDialog from '../exercises/dialogs/Create';
+import SwitchMode from '../exercises/SwitchMode';
 
+ 
 
-
-const Header = ({ muscles, onExerciseCreate }) => {
+const Header = ({ muscles, onExerciseCreate, toggleDark, settoggleDark }) => {
   return (
     <>
     <AppBar position="static">
@@ -31,10 +32,15 @@ const Header = ({ muscles, onExerciseCreate }) => {
 
         <Button color="inherit">Login</Button> */}
 
+        <SwitchMode 
+          toggleDark={toggleDark}
+          settoggleDark={settoggleDark}
+        />
+
         <Typography 
           variant="h5" 
           // color="yellow"
-          sx={{ flex: 1 }}
+          sx={{ marginLeft:'2rem', flex: 1 }}
         >
           Exercise Database
         </Typography>

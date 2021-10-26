@@ -7,6 +7,7 @@ import {
   ListItem,
   ListItemText,
   IconButton,
+  useMediaQuery
 } from '@mui/material';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 // import Delete from '@mui/icons-material/Delete';
@@ -14,22 +15,25 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 // import { Delete, Remove, RemoveCircle } from '@mui/icons-material'
 import Form from './Form';
 import makeStyles from '@mui/styles/makeStyles';
+import { useTheme } from '@mui/material/styles';
+
 
 
 const useStyles = makeStyles(theme => ({
   Paper: {
     padding: "20px",
-    margin: "10px 0",
+    // margin: "10px 0",
+    marginTop: "5px",
     // height: "500px",
-    minHeight: "70vh",
-    maxHeight: "70vh",
+    minHeight: "80vh",
+    height: "80vh",
     overflowY: "auto",  // makes it scrollable
      
   
     [theme.breakpoints.down('sm')]: {
       // backgroundColor: 'red',
-      minHeight: "35vh",
-      maxHeight: "35vh",
+      minHeight: "40vh",
+      height: "40vh",
     }, 
   },
   spacing: {
@@ -41,6 +45,7 @@ const useStyles = makeStyles(theme => ({
   }
   }));
 
+  
 
 // const styles = {
 //   Paper: {
@@ -54,7 +59,6 @@ const useStyles = makeStyles(theme => ({
 // }
 
 
-
 const Props = ({
   exercise, 
   selectedCategory, 
@@ -65,19 +69,20 @@ const Props = ({
   //   description = "Please select an exercise from the left."
   // },
   selectedExercise,
-  setSelectedExercise,
-  exerciseList,
   onDelete,
   onSelectEdit,
   editMode,
   muscles,
-  categories,
   setEditMode,
   selectedExercises,
   onEditExercise
 }) => {
 
   const classes = useStyles();
+
+  const theme = useTheme();
+  let word = useMediaQuery(theme.breakpoints.up('sm'));
+  word = word ? "left" : "top"
 
   // const { id, title = "Welcome!", description = "Please select an exercise from the left."} = selectedExercise;
 
@@ -114,6 +119,7 @@ const Props = ({
                 <Typography 
                   variant="h6"
                   sx={{ textTransform: "capitalize", fontWeight: "bold"}}
+                  color="secondary"
                 >
                   {group}
                 </Typography>
@@ -166,40 +172,38 @@ const Props = ({
 
       <Grid item xs={12} sm={6}
       >
-      {/* <Paper style={styles.Paper} >
-          <Typography
-            variant="h4"
-          >Welcome!</Typography>
-          <Typography
-            variant="subtitle1"
-            sx={{ mt: '20px'}}
-          >Please select an exercise from the left.</Typography>
-      </Paper> */}
+        {/* <Paper style={styles.Paper} >
+            <Typography
+              variant="h4"
+            >Welcome!</Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{ mt: '20px'}}
+            >Please select an exercise from the left.</Typography>
+        </Paper> */}
 
-      {/* <Paper style={styles.Paper} > */}
-      <Paper className={classes.Paper}>
-        { editMode 
-          ? <Form 
-              muscles={muscles} 
-              categories={categories} 
-              setEditMode={setEditMode}
-              selectedExercises={selectedExercises}
-              onEditExercise={onEditExercise}
-            />
-          : <>
-              <Typography 
-                variant="h4"
-              // >{selectedtitle ? selectedtitle : "Welcome!"}</Typography>
-              >{selectedtitle ? selectedtitle : "Welcome!"}</Typography>
-              <Typography
-                variant="subtitle1"
-                sx={{ mt: '20px'}}
-              >{selecteddescription ? selecteddescription : "Please select an exercise from the left."}</Typography>
-            </>
-        }
+        {/* <Paper style={styles.Paper} > */}
+        <Paper className={classes.Paper}>
 
-     
-      </Paper>
+          { editMode 
+            ? <Form 
+                muscles={muscles} 
+                setEditMode={setEditMode}
+                selectedExercises={selectedExercises}
+                onEditExercise={onEditExercise}
+              />
+            : <>
+                <Typography variant="h4" gutterBottom color="secondary">
+                  {selectedtitle ? selectedtitle : "Welcome!"}
+                </Typography>
+                <Typography variant="subtitle1" // sx={{ mt: '20px'}}
+                  // >{selecteddescription ? selecteddescription : "Please select an exercise from the left."}</Typography>
+                  >{selecteddescription ? selecteddescription : `Please select an exercise from the ${word} `}
+                </Typography>
+              </>
+          }
+
+        </Paper>
 
       </Grid>
 
