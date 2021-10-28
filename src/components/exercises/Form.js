@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {  
   DialogActions,
   TextField,
@@ -8,15 +8,26 @@ import {
   Select,
   MenuItem
 } from '@mui/material';
+import { MusclesContext } from '../../context';
 
 
 
-const Form = ({ 
-  muscles: categories, 
-  setEditMode, 
-  selectedExercises,
-  onEditExercise
-}) => {
+// const Form = ({ 
+//   // muscles: categories, 
+//   // setEditMode, 
+//   // selectedExercises,
+//   // onEditExercise
+// }) => {
+
+  const Form = () => {
+
+  const { 
+    setEditMode, 
+    muscles: categories, 
+    selectedExercise: selectedExercises, 
+    handleExerciseEdit: onEditExercise
+  } = useContext(MusclesContext);
+
 
   const [id, setId] = useState(selectedExercises.id)
   const [title, setTitle] = useState(selectedExercises.title);
@@ -27,12 +38,10 @@ const Form = ({
 
   useEffect(() => {
     // console.log(selectedExercises)
-
     setId(selectedExercises.id)
     setTitle(selectedExercises.title)
     setDescription(selectedExercises.description)
     setMuscles(selectedExercises.muscles)
-
   }, [selectedExercises])
 
 
@@ -42,6 +51,7 @@ const Form = ({
     setDescription('');
     setMuscles('');
   };
+
 
 
   const handleSubmit = () => {

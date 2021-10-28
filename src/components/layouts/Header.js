@@ -10,7 +10,10 @@ import SwitchMode from '../exercises/SwitchMode';
 
  
 
-const Header = ({ muscles, onExerciseCreate, toggleDark, settoggleDark }) => {
+// const Header = ({ muscles, onExerciseCreate, toggleDark, settoggleDark }) => {
+const Header = () => {
+
+  
   return (
     <>
     <AppBar position="static">
@@ -32,10 +35,12 @@ const Header = ({ muscles, onExerciseCreate, toggleDark, settoggleDark }) => {
 
         <Button color="inherit">Login</Button> */}
 
-        <SwitchMode 
+        {/* <SwitchMode 
           toggleDark={toggleDark}
           settoggleDark={settoggleDark}
-        />
+        /> */}
+
+        <SwitchMode />
 
         <Typography 
           variant="h5" 
@@ -45,7 +50,8 @@ const Header = ({ muscles, onExerciseCreate, toggleDark, settoggleDark }) => {
           Exercise Database
         </Typography>
 
-        <CreateDialog muscles={muscles} onExerciseCreate={onExerciseCreate} />
+        {/* <CreateDialog muscles={muscles} onExerciseCreate={onExerciseCreate} /> */}
+        <CreateDialog />
       
     </Toolbar>
   </AppBar>

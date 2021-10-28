@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useContext } from 'react';
 import {  
   Typography,
   Paper,
@@ -16,15 +16,17 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Form from './Form';
 import makeStyles from '@mui/styles/makeStyles';
 import { useTheme } from '@mui/material/styles';
+import { MusclesContext } from '../../context';
 
 
 
 const useStyles = makeStyles(theme => ({
-  Paper: {
-    padding: "20px",
-    // margin: "10px 0",
+  paper: {
+    // padding: "20px",
+    padding: theme.spacing(2) ,
     marginTop: "5px",
-    // height: "500px",
+    // height: 'calc(100% - 10px)',
+
     minHeight: "80vh",
     height: "80vh",
     overflowY: "auto",  // makes it scrollable
@@ -34,15 +36,25 @@ const useStyles = makeStyles(theme => ({
       // backgroundColor: 'red',
       minHeight: "40vh",
       height: "40vh",
+      // marginTop: 0,
+      padding: "20px",
     }, 
   },
-  spacing: {
+  container: {
+    height: 'calc(100% - 64px - 48px)',
+    // overflowY: "auto",
     padding: theme.spacing(2),
 
     [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(0)
+      height: 'calc(100% - 56px - 48px)',
+      // padding: theme.spacing(0),
     }, 
-  }
+  },
+  // '@global': {
+  //   'html, body, #root': {
+  //     height: '100%'
+  //   }
+  // }
   }));
 
   
@@ -59,26 +71,43 @@ const useStyles = makeStyles(theme => ({
 // }
 
 
-const Props = ({
-  exercise, 
-  selectedCategory, 
-  onSelect,
+// const Props = ({
+  // exercise, 
+  // selectedCategory, 
+  // onSelect,
   // selectedExercise: {
   //   id, 
   //   title = "Welcome!",   // set a default value "Welcome!" for title
   //   description = "Please select an exercise from the left."
   // },
-  selectedExercise,
-  onDelete,
-  onSelectEdit,
-  editMode,
-  muscles,
-  setEditMode,
-  selectedExercises,
-  onEditExercise
-}) => {
+  // selectedExercise,
+  // onDelete,
+  // onSelectEdit,
+  // muscles,
+  // editMode,
+  // setEditMode,
+  // selectedExercises,
+  // onEditExercise
+// }) => {
+
+
+const Props = () => {
+
+  const { 
+    editMode, 
+    // setEditMode, 
+    // muscles,
+    handleExerciseSelected: onSelect,
+    handleExerciseDelete: onDelete,
+    selectedExercise,
+    handleExerciseSelectEdit: onSelectEdit,
+    selectedCategory,
+    exercise
+  } = useContext(MusclesContext);
+
 
   const classes = useStyles();
+
 
   const theme = useTheme();
   let word = useMediaQuery(theme.breakpoints.up('sm'));
@@ -107,12 +136,12 @@ const Props = ({
   return (
     
     // <Grid container spacing={2}>
-    <Grid container className={classes.spacing}> 
+    <Grid container className={classes.container}> 
 
       <Grid item xs={12} sm={6}>
         {/* <Paper style={styles.Paper}> */}
         {/* <Paper className={classes.Paper} sx={{ overflowY: "auto" }}> */}
-        <Paper className={classes.Paper}>
+        <Paper className={classes.paper}>
           {exercise.map(([group, exerciseItem]) => 
           !selectedCategory || selectedCategory === group
             ? <Fragment key={group}>
@@ -172,7 +201,7 @@ const Props = ({
 
       <Grid item xs={12} sm={6}
       >
-        {/* <Paper style={styles.Paper} >
+        {/* <Paper style={styles.paper} >
             <Typography
               variant="h4"
             >Welcome!</Typography>
@@ -182,15 +211,15 @@ const Props = ({
             >Please select an exercise from the left.</Typography>
         </Paper> */}
 
-        {/* <Paper style={styles.Paper} > */}
-        <Paper className={classes.Paper}>
+        {/* <Paper style={styles.paper} > */}
+        <Paper className={classes.paper}>
 
           { editMode 
             ? <Form 
-                muscles={muscles} 
-                setEditMode={setEditMode}
-                selectedExercises={selectedExercises}
-                onEditExercise={onEditExercise}
+                // muscles={muscles} 
+                // setEditMode={setEditMode}
+                // selectedExercises={selectedExercises}
+                // onEditExercise={onEditExercise}
               />
             : <>
                 <Typography variant="h4" gutterBottom color="secondary">

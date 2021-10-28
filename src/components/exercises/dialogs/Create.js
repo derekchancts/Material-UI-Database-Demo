@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {  
   Dialog, 
   DialogTitle, 
@@ -16,6 +16,8 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 // import Form from '../Form';
 // import makeStyles from '@mui/styles/makeStyles';
+import { MusclesContext } from '../../../context';
+
 
 
 // const useStyles = makeStyles(theme => ({
@@ -33,8 +35,11 @@ import AddIcon from '@mui/icons-material/Add';
 // })) 
 
 
-const Props = ({ muscles: categories, onExerciseCreate }) => {
+// const Props = ({ muscles: categories, onExerciseCreate }) => {
+const Props = () => {
   // const classes = useStyles();
+
+  const { muscles: categories, handleExerciseCreate: onExerciseCreate } = useContext(MusclesContext)
 
   const [isOpen, setIsOpen] = useState(false)
   const [title, setTitle] = useState('');

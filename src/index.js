@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { MusclesProvider } from './context';
+
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import { red, amber } from '@mui/material/colors';
 
@@ -31,7 +33,9 @@ import App from './App';
 ReactDOM.render(
   <React.StrictMode>
     {/* <ThemeProvider theme={theme}> */}
-    <App />
+    <MusclesProvider>
+      <App />
+    </MusclesProvider>
     {/* </ThemeProvider> */}
   </React.StrictMode>,
   document.getElementById('root')

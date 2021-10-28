@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 // import FormGroup from '@mui/material/FormGroup';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Switch from '@mui/material/Switch';
 import {  
   Stack, 
-  Toolbar,  
+  // Toolbar,  
   Typography,
   Switch,
-  FormControlLabel
+  // FormControlLabel
 } from '@mui/material';
+import { MusclesContext } from '../../context';
 
 
 
-const SwitchMode = ({ toggleDark, settoggleDark }) => {
+// const SwitchMode = ({ toggleDark, settoggleDark }) => {
+const SwitchMode = () => {
+
+  const { toggleDark, settoggleDark } = useContext(MusclesContext);
 
   const handleChange = () => {
     settoggleDark(!toggleDark)

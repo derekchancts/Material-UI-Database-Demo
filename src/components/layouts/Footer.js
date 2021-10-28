@@ -1,40 +1,48 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {  
-  Paper,
+  // Paper,
   Tabs,
   Tab,
   // Box,
   useMediaQuery,
   AppBar
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
+// import makeStyles from '@mui/styles/makeStyles';
 import { useTheme } from '@mui/material/styles';
 
+import { MusclesContext } from '../../context';
 
-const useStyles = makeStyles(theme => ({
-  Paper: {
-    // overflowX: "auto",
+
+
+// const useStyles = makeStyles(theme => ({
+//   Paper: {
+//     // overflowX: "auto",
     
-    // '& .MuiTabs-flexContainer': {
-      [theme.breakpoints.down('sm')]: {
-        backgroundColor: 'red',
-        // minWidth:"50%",
-        // maxWidth:"50%",
-      }, 
+//     // '& .MuiTabs-flexContainer': {
+//       [theme.breakpoints.down('sm')]: {
+//         backgroundColor: 'red',
+//         // minWidth:"50%",
+//         // maxWidth:"50%",
+//       }, 
 
-    // }
-  },
-  tabs:{
-    // [theme.breakpoints.up("sm")]: {
-    //   margin:'0 auto'
-    // }
-  },
-}))
+//     // }
+//   },
+//   tabs:{
+//     // [theme.breakpoints.up("sm")]: {
+//     //   margin:'0 auto'
+//     // }
+//   },
+// }))
 
 
 
-const Footer = ({ muscles, selectedCategory, setSelectedCategory }) => {
-  const classes = useStyles();
+// const Footer = ({ muscles, selectedCategory, setSelectedCategory }) => {
+const Footer = () => {
+
+  const { muscles, selectedCategory, setSelectedCategory } = useContext(MusclesContext)
+
+
+  // const classes = useStyles();
 
 
   const theme = useTheme();
